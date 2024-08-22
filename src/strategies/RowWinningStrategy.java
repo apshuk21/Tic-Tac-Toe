@@ -36,4 +36,19 @@ public class RowWinningStrategy implements WinningStrategy {
         }
         return value == board.getSize();
     }
+
+    @Override
+    public void undoMove(Move move) {
+        int row = move.getCol();
+        Symbol symbol = move.getPlayer().getSymbol();
+
+        if (rowMap.containsKey(row)) {
+            Map<Symbol, Integer> map = rowMap.get(row);
+            if (map.containsKey(symbol)) {
+                int currentRowCount = map.get(symbol);
+                int updatedRowCount = currentRowCount - 1;
+                map.put(symbol, updatedRowCount);
+            }
+        }
+    }
 }

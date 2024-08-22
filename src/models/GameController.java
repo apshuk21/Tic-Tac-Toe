@@ -40,8 +40,8 @@ public class GameController {
         return game.getWinner();
     }
 
-    public void Undo(Player player) {
-
+    public void undo(Game game) {
+        game.undo();
     }
 
     public void display(Game game) {

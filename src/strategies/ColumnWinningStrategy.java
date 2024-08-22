@@ -36,4 +36,19 @@ public class ColumnWinningStrategy implements WinningStrategy {
         }
         return value == board.getSize();
     }
+
+    @Override
+    public void undoMove(Move move) {
+        int column = move.getCol();
+        Symbol symbol = move.getPlayer().getSymbol();
+
+        if (columnMap.containsKey(column)) {
+            Map<Symbol, Integer> map = columnMap.get(column);
+            if (map.containsKey(symbol)) {
+                int currentColumnCount = map.get(symbol);
+                int updatedColumnCount = currentColumnCount - 1;
+                map.put(symbol, updatedColumnCount);
+            }
+        }
+    }
 }

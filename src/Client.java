@@ -4,6 +4,7 @@ import strategies.RowWinningStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * 1. Create all models
@@ -14,6 +15,7 @@ import java.util.List;
  * Create the row strategies
  */
 public class Client {
+    static Scanner scanner = new Scanner(System.in);
     public static void main(String[] args) {
         GameController gameController = new GameController();
 
@@ -31,6 +33,13 @@ public class Client {
         while (gameController.checkGameState(game1).equals(GameState.IN_PROGRESS)) {
             gameController.makeMove(game1);
             gameController.display(game1);
+
+            System.out.println("Do you want to undo? [Y/N]");
+            String undoInput = scanner.nextLine().toLowerCase();
+
+            if (undoInput.equals("y")) {
+                gameController.undo(game1);
+            }
         }
 
         // Check the game state

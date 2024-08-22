@@ -154,6 +154,36 @@ public class Game {
         }
     }
 
+    public void undo() {
+        /*
+         * Pop the last move from the moves list
+         * Get the cell from the last move
+         * Empty the cell
+         * Also need to handle hashmaps in the winning strategies
+         * display the board
+         */
+
+        if (moves.isEmpty()) {
+            System.out.println("No more moves to undo!");
+        }
+
+        Move lastMove = moves.removeLast();
+        Cell cellToChange = lastMove.getGridCellLinkedWithMove();
+
+        cellToChange.setCellState(CellState.EMPTY);
+        cellToChange.setSymbol(null);
+
+        // (a - b) % n = (a - b + n) % n
+        nextPlayerIndex = (nextPlayerIndex - 1 + players.size()) % players.size();
+
+        for (WinningStrategy strategy : winningStrategies) {
+            strategy.undoMove(lastMove);
+        }
+
+        setGameState(GameState.IN_PROGRESS);
+        setWinner(null);
+    }
+
     public static class Builder {
         private int size;
         private List<Player> players;
